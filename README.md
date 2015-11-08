@@ -1,4 +1,4 @@
-Role Name
+ansible-docker
 =========
 
 Installs docker on Ubuntu 14.04 hosts.
