@@ -25,7 +25,7 @@ Usage:
 
     - hosts: servers
       roles:
-         - { role: flandi.docker }
+         - { role: ansible-docker }
 
 License
 -------
