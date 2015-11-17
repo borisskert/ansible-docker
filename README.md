@@ -3,6 +3,15 @@ ansible-docker
 
 Installs docker on Ubuntu 14.04 hosts.
 
+Tasks
+-----
+
+* Install LTS Kernel
+* Add repository key from keyserver
+* Add dockerproject.org repository
+* Install docker-engine package
+* Set docker daemon options
+
 Requirements
 ------------
 

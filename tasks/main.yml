@@ -1,4 +1,11 @@
 ---
+- name: Install LTS kernel
+  apt:
+    name: linux-image-generic-lts-trusty
+    state: latest
+    update_cache: yes
+    cache_valid_time: 600
+
 - name: Add repository key from keyserver
   apt_key:
     keyserver: hkp://pgp.mit.edu:80
