@@ -1,0 +1,5 @@
+---
+- hosts: test_machine
+  sudo: yes
+  roles:
+    - { role: '.' }
