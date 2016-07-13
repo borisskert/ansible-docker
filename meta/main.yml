@@ -3,7 +3,7 @@ galaxy_info:
   author: flandi
   description: Docker installation role for Ubuntu 14.04
   company: flandi private
-  issue_tracker_url: https://git-flandi.no-ip.org/Infrastructure/ansible-docker/issues
+  issue_tracker_url: https://git.flandigt.de/Infrastructure/install-docker/issues
   license: BSD
   min_ansible_version: 1.2
   platforms:
