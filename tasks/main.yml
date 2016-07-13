@@ -14,15 +14,42 @@
   apt:
     name: docker-engine
     state: latest
-    update_cache: yes
-    cache_valid_time: 600
 
 - name: Set docker daemon options
   lineinfile:
     dest: /etc/default/docker
     line: "DOCKER_OPTS=\"{{ docker_opts.rstrip('\n') }}\""
     regexp: "^DOCKER_OPTS="
-    insertafter: "^#DOCKER_OPTS="
+    create: yes
   notify:
     - Restart docker
   when: docker_opts != ""
+
+- name: Setup docker http-proxy
+  lineinfile:
+    dest: /etc/default/docker
+    line: "export HTTP_PROXY=\"{{ http_proxy }}\""
+    regexp: "^export HTTP_PROXY="
+    create: yes
+  notify:
+    - Restart docker
+  when: http_proxy != ""
+
+- name: Setup docker https-proxy
+  lineinfile:
+    dest: /etc/default/docker
+    line: "export HTTPS_PROXY=\"{{ https_proxy }}\""
+    regexp: "^export HTTPS_PROXY="
+  notify:
+    - Restart docker
+  when: https_proxy != ""
+
+- name: Setup docker no_proxy hosts
+  lineinfile:
+    dest: /etc/default/docker
+    line: "export NO_PROXY=\"{{ no_proxy }}\""
+    regexp: "^export NO_PROXY="
+    create: yes
+  notify:
+    - Restart docker
+  when: no_proxy != ""
