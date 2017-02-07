@@ -1,5 +1,2 @@
 ---
-docker_opts: ""
-http_proxy: ""
-https_proxy: ""
-no_proxy: ""
+docker_opts: ''

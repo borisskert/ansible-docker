@@ -1,0 +1,13 @@
+[Install]
+WantedBy = multi-user.target
+
+[Unit]
+Description = docker service
+
+[Service]
+ExecStart=
+{% if docker_opts == "" %}
+ExecStart=/usr/bin/docker daemon
+{% else %}
+ExecStart=/usr/bin/docker daemon {{ docker_opts.rstrip('\n') }}
+{% endif %}

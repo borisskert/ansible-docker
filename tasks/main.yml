@@ -1,55 +1,6 @@
 ---
-- name: Add repository key from keyserver
-  apt_key:
-    keyserver: hkp://pgp.mit.edu:80
-    id: 58118E89F3A912897C070ADBF76221572C52609D
+- include: ubuntu-trusty.main.yml
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
 
-- name: Add dockerproject.org repository
-  apt_repository:
-    repo: 'deb https://apt.dockerproject.org/repo ubuntu-trusty main'
-    update_cache: yes
-    state: present
-
-- name: Install docker-engine package
-  apt:
-    name: docker-engine
-    state: latest
-
-- name: Set docker daemon options
-  lineinfile:
-    dest: /etc/default/docker
-    line: "DOCKER_OPTS=\"{{ docker_opts.rstrip('\n') }}\""
-    regexp: "^DOCKER_OPTS="
-    create: yes
-  notify:
-    - Restart docker
-  when: docker_opts != ""
-
-- name: Setup docker http-proxy
-  lineinfile:
-    dest: /etc/default/docker
-    line: "export HTTP_PROXY=\"{{ http_proxy }}\""
-    regexp: "^export HTTP_PROXY="
-    create: yes
-  notify:
-    - Restart docker
-  when: http_proxy != ""
-
-- name: Setup docker https-proxy
-  lineinfile:
-    dest: /etc/default/docker
-    line: "export HTTPS_PROXY=\"{{ https_proxy }}\""
-    regexp: "^export HTTPS_PROXY="
-  notify:
-    - Restart docker
-  when: https_proxy != ""
-
-- name: Setup docker no_proxy hosts
-  lineinfile:
-    dest: /etc/default/docker
-    line: "export NO_PROXY=\"{{ no_proxy }}\""
-    regexp: "^export NO_PROXY="
-    create: yes
-  notify:
-    - Restart docker
-  when: no_proxy != ""
+- include: ubuntu-xenial.main.yml
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'

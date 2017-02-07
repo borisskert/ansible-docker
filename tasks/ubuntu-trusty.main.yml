@@ -1,0 +1,35 @@
+---
+- name: Install needed dependencies
+  apt:  name='{{ item }}' state='latest' update_cache='no'
+  with_items:
+    - wget
+    - apt-transport-https
+
+- name: Add repository key from keyserver
+  apt_key:
+    keyserver: hkp://pgp.mit.edu:80
+    id: 58118E89F3A912897C070ADBF76221572C52609D
+
+- name: Add dockerproject.org repository
+  apt_repository:
+    repo: 'deb https://apt.dockerproject.org/repo ubuntu-trusty main'
+    update_cache: yes
+    state: present
+
+- name: Install docker-engine package
+  apt:
+    name: docker-engine
+    state: latest
+
+- name: Set docker daemon options
+  lineinfile:
+    dest: /etc/default/docker
+    line: "DOCKER_OPTS=\"{{ docker_opts.rstrip('\n') }}\""
+    regexp: "^DOCKER_OPTS="
+    create: yes
+  register: docker_options
+  when: docker_opts != ""
+
+- name: Restart docker service
+  service: name=docker state=restarted
+  when: docker_options.changed or docker_http_proxy.changed or docker_https_proxy.changed or docker_no_proxy_hosts.changed
