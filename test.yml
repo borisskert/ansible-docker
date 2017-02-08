@@ -1,11 +1,10 @@
 ---
-- hosts: opensuse-test-vm
+- hosts: raspberry_pw
   become: yes
 
+  pre_tasks:
+  - debug:
+      msg: '{{vars}}'
+
   roles:
-    - { role: ".",
-        docker_opts: "-H tcp://127.0.0.1:2375 -H unix:///var/run/docker.sock --insecure-registry docker-registry.nbg.isogmbh.de",
-        http_proxy: "{{use_http_proxy}}",
-        https_proxy: "{{use_http_proxy}}",
-        no_proxy: "{{no_proxy_hosts}}"
-      }
+    - role: '.'

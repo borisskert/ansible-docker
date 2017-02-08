@@ -4,3 +4,6 @@
 
 - include: ubuntu-xenial.main.yml
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
+
+- include: raspbian_jessie.main.yml
+  when: ansible_machine == 'armv7l' and ansible_distribution == 'Debian' and ansible_distribution_release == 'jessie'
