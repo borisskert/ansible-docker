@@ -30,6 +30,9 @@
   register: docker_options
   when: docker_opts != ""
 
+- include: setup_storage_driver.yml
+  when: storage_driver != ''
+
 - name: Restart docker service
   service: name=docker state=restarted
-  when: docker_options.changed or docker_http_proxy.changed or docker_https_proxy.changed or docker_no_proxy_hosts.changed
+  when: docker_options.changed or docker_http_proxy.changed or docker_https_proxy.changed or docker_no_proxy_hosts.changed or docker_storage_driver.changed

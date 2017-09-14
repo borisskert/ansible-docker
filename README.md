@@ -43,6 +43,7 @@ Role parameters
 * http_proxy: to set the http-proxy for docker
 * https_proxy: to set the https-proxy for docker
 * no_proxy: to set the no-proxy hosts for docker
+* storage_driver to setup docker storage-driver, like overlay2
 
 Example Playbook
 ----------------
@@ -57,9 +58,9 @@ Usage (with parameters):
 
     - hosts: servers
       roles:
-         - { role: install-docker,
-         docker_opts: "-H tcp://127.0.0.1:4243 -H unix:///var/run/docker.sock --dns 8.8.8.8 --dns 8.8.4.4",
-         http_proxy: "http://proxy:81",
-         https_proxy: "http://proxy:81",
-         no_proxy: "localhost,127.0.0.1"
-          }
+      - role: install-docker
+        docker_opts: "-H tcp://127.0.0.1:4243 -H unix:///var/run/docker.sock --dns 8.8.8.8 --dns 8.8.4.4",
+        http_proxy: "http://proxy:81",
+        https_proxy: "http://proxy:81",
+        no_proxy: "localhost,127.0.0.1"
+        storage_driver: overlay2

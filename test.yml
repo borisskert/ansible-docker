@@ -1,5 +1,5 @@
 ---
-- hosts: raspberry_pw
+- hosts: test_machine
   become: yes
 
   pre_tasks:
@@ -8,3 +8,4 @@
 
   roles:
     - role: '.'
+      storage_driver: overlay2
