@@ -21,6 +21,11 @@
     name: docker-engine
     state: latest
 
+- name: Install docker-compose package
+  apt:
+    name: docker-compose
+    state: latest
+
 - name: Copy docker unit file
   template:
     src: ubuntu-xenial.docker.unitfile.j2
