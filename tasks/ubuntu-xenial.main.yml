@@ -7,23 +7,18 @@
 
 - name: Add repository key from keyserver
   apt_key:
-    keyserver: hkp://pgp.mit.edu:80
-    id: 58118E89F3A912897C070ADBF76221572C52609D
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
 
-- name: Add dockerproject.org repository
+- name: Add repository
   apt_repository:
-    repo: 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+    repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable'
     update_cache: yes
     state: present
 
 - name: Install docker-engine package
   apt:
-    name: docker-engine
-    state: latest
-
-- name: Install docker-compose package
-  apt:
-    name: docker-compose
+    name: docker-ce
     state: latest
 
 - name: Copy docker unit file
