@@ -21,22 +21,9 @@
     name: docker-ce
     state: latest
 
-- name: Copy docker unit file
-  template:
-    src: ubuntu-xenial.docker.unitfile.j2
-    dest: /etc/systemd/system/docker.service
-    owner: root
-    group: root
-    mode: 0550
-  register: docker_unit_file
-
 - include: setup_storage_driver.yml
   when: storage_driver != ''
 
-- name: Reload systemd
-  command: systemctl daemon-reload
-  when: docker_unit_file.changed
-
 - name: Restart docker service
   service: name=docker state=restarted
-  when: docker_unit_file.changed or docker_storage_driver.changed
+  when: docker_storage_driver.changed
