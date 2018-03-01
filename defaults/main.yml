@@ -4,3 +4,8 @@ key_id: 58118E89F3A912897C070ADBF76221572C52609D
 apt_repo: https://apt.dockerproject.org/repo
 
 storage_driver: ''
+
+enable_docker_cleanup: false
+docker_cleanup_script_path: /opt/docker
+docker_cleanup_script_file_path: "{{docker_cleanup_script_path}}/docker_cleanup.bash"
+docker_cleanup_log: /var/log/docker_cleanup.log

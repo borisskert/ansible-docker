@@ -7,3 +7,6 @@
 
 - include: raspbian_jessie.main.yml
   when: ansible_machine == 'armv7l' and ansible_distribution == 'Debian' and ansible_distribution_release == 'jessie'
+
+- include: setup_docker_cleanup_cron_job.yml
+  when: enable_docker_cleanup == true
