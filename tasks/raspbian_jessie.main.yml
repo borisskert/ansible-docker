@@ -1,4 +1,7 @@
 ---
+- include_vars:
+    file: raspbian.yml
+
 - name: Install needed dependencies
   apt:
     name: '{{ item }}'

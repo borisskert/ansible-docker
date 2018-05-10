@@ -1,0 +1,5 @@
+{% if repo.distribution is defined %}
+deb [arch={{repo.arch}}] {{repo.url}} {{repo.distribution[ansible_distribution_release] | default(ansible_distribution_release)}} {{repo.branch}}
+{% else %}
+deb [arch={{repo.arch}}] {{repo.url}} {{ansible_distribution_release}} {{repo.branch}}
+{% endif %}

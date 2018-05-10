@@ -1,12 +1,9 @@
 ---
-- include: ubuntu-trusty.main.yml
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
-
-- include: ubuntu-xenial.main.yml
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
+- include: ubuntu.main.yml
+  when: ansible_distribution == 'Ubuntu'
 
 - include: raspbian_jessie.main.yml
   when: ansible_machine == 'armv7l' and ansible_distribution == 'Debian' and ansible_distribution_release == 'jessie'
 
 - include: setup_docker_cleanup_cron_job.yml
-  when: enable_docker_cleanup == true
+  when: docker_cleanup.enabled == true

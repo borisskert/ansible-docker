@@ -1,4 +1,7 @@
 ---
+- include_vars:
+    file: ubuntu.yml
+
 - name: Install needed dependencies
   apt:  name='{{ item }}' state='latest' update_cache='no'
   with_items:
@@ -7,14 +10,19 @@
 
 - name: Add repository key from keyserver
   apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
+    url: "{{repo.key_url}}"
     state: present
 
 - name: Add repository
-  apt_repository:
-    repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu trusty stable'
+  template:
+    src: apt.source.list.j2
+    dest: /etc/apt/sources.list.d/download_docker_com_linux_ubuntu.list
+  register: apt_repo
+
+- name: Update apt chache
+  apt:
     update_cache: yes
-    state: present
+  when: apt_repo.changed
 
 - name: Install docker-engine package
   apt:
@@ -23,6 +31,7 @@
 
 - include: setup_storage_driver.yml
   when: storage_driver != ''
+  register: docker_storage_driver
 
 - name: Restart docker service
   service: name=docker state=restarted

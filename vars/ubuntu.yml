@@ -1,0 +1,8 @@
+---
+repo:
+  key_url: https://download.docker.com/linux/ubuntu/gpg
+  url: https://download.docker.com/linux/ubuntu
+  arch: amd64
+  branch: stable
+  distribution:
+    bionic: 'artful'

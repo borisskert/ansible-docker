@@ -1,28 +1,31 @@
-ansible-docker
-==============
+# ansible-docker
 
 Installs docker-daemon and cli.
 
-Requirements
-------------
+## Requirements
 
 Operating systems:
 
-* Ubuntu 14.04 or 16.04
-* Raspian jessie
+* Ubuntu:
+* * 14.04 (untested, should work)
+* * 16.04 (tested)
+* * 18.04 (tested, use package from 'artful' repo)
+* Raspian jessie (longer time untested)
 
-Tasks
------
+## Tasks
 
 * Add repository key from keyserver
 * Add docker repository
 * Install docker-ce package
-* Setup docker daemon options
+* Setup docker daemon options (optional)
+* Setup docker-cleanup cron-job (optional)
 
-Role parameters
---------------
+## Role parameters
 
-* storage_driver to setup docker storage-driver, like overlay2
+| Variable      | Type | Mandatory? | Default | Description           |
+|---------------|------|------------|---------|-----------------------|
+| storage_driver | text | no        | <empty => aufs> | The docker storage driver (consider documentation) |
+| cleanup_enabled | text | no       | False => disabled | Creates cron-job to delete all stopped containers and delete all untagged images |
 
 Example Playbook
 ----------------
@@ -39,3 +42,4 @@ Usage (with parameters):
       roles:
       - role: install-docker
         storage_driver: overlay2
+        cleanup_enabled: true
