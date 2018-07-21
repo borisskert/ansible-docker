@@ -4,5 +4,4 @@ repo:
   url: https://download.docker.com/linux/ubuntu
   arch: amd64
   branch: stable
-  distribution:
-    bionic: 'artful'
+  distribution: {}
