@@ -3,10 +3,11 @@
     file: ubuntu.yml
 
 - name: Install needed dependencies
-  apt:  name='{{ item }}' state='latest' update_cache='no'
-  with_items:
-    - wget
-    - apt-transport-https
+  apt:
+    name:
+      - wget
+      - apt-transport-https
+    state: latest
 
 - name: Add repository key from keyserver
   apt_key:

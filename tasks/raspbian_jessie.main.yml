@@ -4,11 +4,9 @@
 
 - name: Install needed dependencies
   apt:
-    name: '{{ item }}'
+    name: apt-transport-https
     state: latest
     update_cache: yes
-  with_items:
-    - apt-transport-https
 
 - name: Add repository key from keyserver
   apt_key:

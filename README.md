@@ -7,9 +7,7 @@ Installs docker-daemon and cli.
 Operating systems:
 
 * Ubuntu:
-* * 14.04 (untested, should work)
-* * 16.04 (tested)
-* * 18.04 (tested, use package from 'artful' repo)
+  * 18.04 (tested)
 * Raspian jessie (longer time untested)
 
 ## Tasks
