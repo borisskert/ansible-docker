@@ -1,0 +1,8 @@
+---
+- name: check 'docker_cleanup' parameter
+  assert:
+    that:
+      - "docker_cleanup.script_path != ''"
+      - "docker_cleanup.script_filename != ''"
+      - "docker_cleanup.log != ''"
+    fail_msg: "parameter 'docker_cleanup' incorrect or missing"

@@ -1,0 +1,6 @@
+---
+- include: cleanup-cron-job/remove.yml
+  when: cleanup_enabled == false
+
+- include: cleanup-cron-job/install.yml
+  when: cleanup_enabled == true

@@ -1,9 +1,14 @@
 ---
+- include: verify-parameters.yml
+
 - include: ubuntu.main.yml
   when: ansible_distribution == 'Ubuntu'
 
-- include: raspbian_jessie.main.yml
+- include: raspbian-jessie.main.yml
   when: ansible_machine == 'armv7l' and ansible_distribution == 'Debian' and ansible_distribution_release == 'jessie'
 
-- include: setup_docker_cleanup_cron_job.yml
+- include: setup-docker-cleanup-cron-job.yml
   when: docker_cleanup.enabled == true
+
+- include: setup-python-docker.yml
+  when: install_pip_docker == true

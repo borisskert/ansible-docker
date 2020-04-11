@@ -30,7 +30,7 @@
     name: docker-ce
     state: latest
 
-- include: setup_storage_driver.yml
+- include: setup-storage-driver.yml
   when: storage_driver != ''
   register: docker_storage_driver
 

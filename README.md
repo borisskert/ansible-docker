@@ -7,6 +7,7 @@ Installs docker-daemon and cli.
 Operating systems:
 
 * Ubuntu:
+  * 16.04 (tested)
   * 18.04 (tested)
 * Raspian jessie (longer time untested)
 
@@ -17,13 +18,15 @@ Operating systems:
 * Install docker-ce package
 * Setup docker daemon options (optional)
 * Setup docker-cleanup cron-job (optional)
+* Setup python3 docker via pip (optional)
 
 ## Role parameters
 
 | Variable      | Type | Mandatory? | Default | Description           |
 |---------------|------|------------|---------|-----------------------|
 | storage_driver | text | no        | <empty => aufs> | The docker storage driver (consider documentation) |
-| cleanup_enabled | text | no       | False => disabled | Creates cron-job to delete all stopped containers and delete all untagged images |
+| cleanup_enabled | text | no       | no => disabled  | Creates cron-job to delete all stopped containers and delete all untagged images |
+| install_pip_docker | text | no       | no => will not be installed | Installs the python docker pip package                            |
 
 Example Playbook
 ----------------
@@ -40,4 +43,5 @@ Usage (with parameters):
       roles:
       - role: install-docker
         storage_driver: overlay2
-        cleanup_enabled: true
+        cleanup_enabled: yes
+        install_pip_docker: yes

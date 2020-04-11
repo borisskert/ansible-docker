@@ -1,13 +1,11 @@
 ---
 - name: create docker script directory
-  file: path={{docker_cleanup.script_path}} state=directory owner=root group=root mode=755
-  when: not(
-            (docker_cleanup.script_path is undefined)
-            or
-            (docker_cleanup.script_path is none)
-            or
-            (docker_cleanup.script_path | trim == '')
-          )
+  file:
+    path: "{{docker_cleanup.script_path}}"
+    state: directory
+    owner: root
+    group: root
+    mode: '755'
 
 - name: copy docker-cleanup script
   copy:

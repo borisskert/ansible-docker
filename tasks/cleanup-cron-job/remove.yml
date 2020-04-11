@@ -1,0 +1,10 @@
+---
+- name: remove docker cleanup script directory
+  file:
+    path: "{{docker_cleanup.script_path}}"
+    state: absent
+
+- name: remove cron job for docker-cleanup
+  file:
+    path: /etc/cron.d/docker_cleanup
+    state: absent
