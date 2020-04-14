@@ -8,6 +8,7 @@
       - wget
       - apt-transport-https
     state: latest
+    update_cache: yes
 
 - name: Add repository key from keyserver
   apt_key:

@@ -3,6 +3,11 @@ set -e
 
 vagrant up --provision
 
+echo "Waiting for answer on port 22..."
+while ! timeout 300 nc -z 192.168.33.10 22; do
+  sleep 0.2
+done
+
 ansible-playbook -i inventory.ini test.yml
 
 ansible-playbook -i inventory.ini test.yml \

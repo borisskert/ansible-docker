@@ -9,6 +9,7 @@ Operating systems:
 * Ubuntu:
   * 16.04 (tested)
   * 18.04 (tested)
+  * 20.04 (not working yet)
 * Raspian jessie (longer time untested)
 
 ## Tasks
