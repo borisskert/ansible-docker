@@ -19,29 +19,31 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "shell", inline: <<-SHELL
-    # https://www.unix.com/shell-programming-and-scripting/207169-non-interactive-fdisk-partition-script.html
-    echo "n
-    p
-    1
+    if ! mount | grep -q /dev/mapper/my_vol_group-my_volume ; then
+      # https://www.unix.com/shell-programming-and-scripting/207169-non-interactive-fdisk-partition-script.html
+      echo "n
+      p
+      1
 
 
-    t
-    8e
-    w" | fdisk /dev/sdc
+      t
+      8e
+      w" | fdisk /dev/sdc
 
-    pvcreate /dev/sdc1
-    vgcreate my_vol_group /dev/sdc1
-    lvcreate -L 1G -n my_volume my_vol_group
+      pvcreate /dev/sdc1
+      vgcreate my_vol_group /dev/sdc1
+      lvcreate -L 1G -n my_volume my_vol_group
 
-    # device available at:
-    ls -la /dev/my_vol_group/my_volume
+      # device available at:
+      ls -la /dev/my_vol_group/my_volume
 
-    mkfs.xfs -n ftype=1 /dev/my_vol_group/my_volume
+      mkfs.xfs -n ftype=1 /dev/my_vol_group/my_volume
 
-    mkdir -p /var/lib/docker
+      mkdir -p /var/lib/docker
 
-    echo "\n/dev/mapper/my_vol_group-my_volume   /var/lib/docker        xfs   defaults        0 0\n" >> /etc/fstab
+      echo "\n/dev/mapper/my_vol_group-my_volume   /var/lib/docker        xfs   defaults        0 0\n" >> /etc/fstab
 
-    mount /var/lib/docker
+      mount /var/lib/docker
+    fi
   SHELL
 end

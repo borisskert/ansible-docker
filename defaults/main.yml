@@ -4,9 +4,3 @@ storage_options: []
 
 cleanup_enabled: no
 install_pip_docker: no
-
-docker_cleanup:
-  enabled: "{{cleanup_enabled}}"
-  script_path: /opt/docker/cleanup
-  script_filename: docker_cleanup.bash
-  log: /var/log/docker_cleanup.log

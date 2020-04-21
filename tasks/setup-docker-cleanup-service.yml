@@ -1,0 +1,35 @@
+---
+- name: Create cleanup service
+  copy:
+    src: ./files/docker-cleanup.service
+    dest: "/etc/systemd/system/docker-cleanup.service"
+    owner: root
+    group: root
+    mode: 0644
+  register: cleanup_service
+
+- name: Create cleanup timer
+  copy:
+    src: ./files/docker-cleanup.timer
+    dest: "/etc/systemd/system/docker-cleanup.timer"
+    owner: root
+    group: root
+    mode: 0644
+  register: cleanup_timer
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  when: >
+    cleanup_service.changed
+    or cleanup_timer.changed
+
+- name: Setup cleanup service
+  systemd:
+    name: docker-cleanup.service
+    enabled: yes
+
+- name: Setup cleanup timer
+  systemd:
+    name: docker-cleanup.timer
+    enabled: yes
+    state: "{{ 'started' if cleanup_enabled | bool else 'stopped' | default('stopped') }}"

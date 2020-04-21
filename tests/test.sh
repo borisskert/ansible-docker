@@ -20,4 +20,4 @@ curl -s http://192.168.33.68:8080 \
   && (echo 'curl test: pass' && exit 0) \
   || (echo 'curl test: fail' && exit 1)
 
-#vagrant destroy -f
+vagrant destroy -f
