@@ -1,5 +1,7 @@
 ---
 storage_driver: ''
+storage_options: []
+
 cleanup_enabled: no
 install_pip_docker: no
 

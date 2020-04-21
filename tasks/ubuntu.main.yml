@@ -10,6 +10,14 @@
     state: latest
     update_cache: yes
 
+- name: Install needed dependencies for devicemapper
+  apt:
+    name:
+      - thin-provisioning-tools
+    state: latest
+    update_cache: no
+  when: storage_driver == 'devicemapper'
+
 - name: Add repository key from keyserver
   apt_key:
     url: "{{repo.key_url}}"
@@ -36,5 +44,12 @@
   register: docker_storage_driver
 
 - name: Restart docker service
-  service: name=docker state=restarted
+  service:
+    name: docker
+    state: restarted
   when: docker_storage_driver.changed
+
+- name: Start docker service (if not started already)
+  service:
+    name: docker
+    state: started

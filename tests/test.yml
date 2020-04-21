@@ -23,3 +23,13 @@
         ports:
           - "8080:80"
           - "8443:443"
+
+    - name: test -- pull some images
+      docker_image:
+        name: "{{item}}"
+        source: pull
+      with_items:
+        - ubuntu:17.04
+        - ubuntu:18.04
+        - ubuntu:19.04
+        - ubuntu:20.04
