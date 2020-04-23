@@ -9,16 +9,16 @@ Operating systems:
 * Ubuntu:
   * 16.04 (tested)
   * 18.04 (tested)
-  * 20.04 (not working yet)
+  * 20.04 (tested - installing `docker.io` package)
 * Raspian jessie (longer time untested)
 
 ## Tasks
 
 * Add repository key from keyserver
 * Add docker repository
-* Install docker-ce package
+* Install docker-ce package (`docker.io` in Ubuntu 20.04)
 * Setup docker daemon options (optional)
-* Setup docker-cleanup cron-job (optional)
+* Setup docker-cleanup systemd service (optional)
 * Setup python3 docker via pip (optional)
 
 ## Role parameters
@@ -29,8 +29,7 @@ Operating systems:
 | cleanup_enabled | text | no       | no => disabled  | Creates cron-job to delete all stopped containers and delete all untagged images |
 | install_pip_docker | text | no       | no => will not be installed | Installs the python docker pip package                            |
 
-Example Playbook
-----------------
+## Example Playbook
 
 Usage (without parameters):
 
@@ -46,3 +45,18 @@ Usage (with parameters):
         storage_driver: overlay2
         cleanup_enabled: yes
         install_pip_docker: yes
+
+## Testing
+
+Requirements:
+
+* Vagrant with vagrant plugin `vagrant-vbguest` installed
+* VirtualBox
+* Ansible
+
+Run:
+
+```shell script
+cd test
+./test.sh
+```
