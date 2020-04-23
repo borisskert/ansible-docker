@@ -1,4 +1,10 @@
 ---
+- name: Remove docker.oi package
+  apt:
+    name:
+      - docker.io
+    state: absent
+
 - include_vars:
     file: ubuntu.yml
 
@@ -9,14 +15,6 @@
       - apt-transport-https
     state: latest
     update_cache: yes
-
-- name: Install needed dependencies for devicemapper
-  apt:
-    name:
-      - thin-provisioning-tools
-    state: latest
-    update_cache: no
-  when: storage_driver == 'devicemapper'
 
 - name: Add repository key from keyserver
   apt_key:
@@ -34,22 +32,7 @@
     update_cache: yes
   when: apt_repo.changed
 
-- name: Install docker-engine package
+- name: Install docker-ce package
   apt:
     name: docker-ce
     state: latest
-
-- include: setup-storage-driver.yml
-  when: storage_driver != ''
-  register: docker_storage_driver
-
-- name: Restart docker service
-  service:
-    name: docker
-    state: restarted
-  when: docker_storage_driver.changed
-
-- name: Start docker service (if not started already)
-  service:
-    name: docker
-    state: started

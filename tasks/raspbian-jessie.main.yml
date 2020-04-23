@@ -32,6 +32,3 @@
   apt:
     name: docker-engine
     state: latest
-
-- include: setup-storage-driver.yml
-  when: storage_driver != ''

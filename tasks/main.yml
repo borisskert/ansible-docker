@@ -1,11 +1,10 @@
 ---
-- include: ubuntu.main.yml
-  when: ansible_distribution == 'Ubuntu'
-    and ansible_distribution_release != 'focal'
+- include: setup-storage-driver.yml
+  when: storage_driver != ''
+  register: docker_storage_driver
 
-- include: ubuntu-focal.main.yml
+- include: ubuntu/main.yml
   when: ansible_distribution == 'Ubuntu'
-    and ansible_distribution_release == 'focal'
 
 - include: raspbian-jessie.main.yml
   when: ansible_machine == 'armv7l' and ansible_distribution == 'Debian'
