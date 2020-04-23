@@ -1,5 +1,5 @@
 ---
-- name: Create storage
+- name: Create config directory
   file:
     path: /etc/docker
     state: directory

@@ -29,22 +29,40 @@ Operating systems:
 | cleanup_enabled | text | no       | no => disabled  | Creates cron-job to delete all stopped containers and delete all untagged images |
 | install_pip_docker | text | no       | no => will not be installed | Installs the python docker pip package                            |
 
-## Example Playbook
+## Usage
 
-Usage (without parameters):
+### Add to `requirements.yml`:
 
-    - hosts: servers
-      roles:
-         - { role: install-docker }
+```yaml
+- name: install-docker
+  src: https://github.com/borisskert/ansible-docker.git
+  scm: git
+```
 
-Usage (with parameters):
+### Example playbooks
 
-    - hosts: servers
-      roles:
-      - role: install-docker
-        storage_driver: overlay2
-        cleanup_enabled: yes
-        install_pip_docker: yes
+Minimal:
+
+```yaml
+- hosts: test_machine
+  become: yes
+
+  roles:
+    - role: install-docker
+```
+
+All parameters:
+
+```yaml
+- hosts: test_machine
+  become: yes
+
+  roles:
+    - role: install-docker
+      storage_driver: overlay2
+      cleanup_enabled: yes
+      install_pip_docker: yes
+```
 
 ## Testing
 
