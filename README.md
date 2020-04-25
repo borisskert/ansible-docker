@@ -26,7 +26,7 @@ Operating systems:
 | Variable      | Type | Mandatory? | Default | Description           |
 |---------------|------|------------|---------|-----------------------|
 | storage_driver | text | no        | <empty => aufs> | The docker storage driver (consider documentation) |
-| cleanup_enabled | text | no       | no => disabled  | Creates cron-job to delete all stopped containers and delete all untagged images |
+| cleanup_enabled | text | no       | no => disabled  | Creates a systemd service to delete all stopped containers and delete unused images |
 | install_pip_docker | text | no       | no => will not be installed | Installs the python docker pip package                            |
 
 ## Usage

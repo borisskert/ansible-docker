@@ -31,5 +31,5 @@
 - name: Setup cleanup timer
   systemd:
     name: docker-cleanup.timer
-    enabled: yes
-    state: "{{ 'started' if cleanup_enabled | bool else 'stopped' | default('stopped') }}"
+    enabled: "{{cleanup_enabled | bool}}"
+    state: "{{ 'started' if (cleanup_enabled | bool) else 'stopped' | default('stopped') }}"
