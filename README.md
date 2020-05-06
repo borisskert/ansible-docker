@@ -27,7 +27,8 @@ Operating systems:
 |---------------|------|------------|---------|-----------------------|
 | storage_driver | text | no        | <empty => aufs> | The docker storage driver (consider documentation) |
 | cleanup_enabled | text | no       | no => disabled  | Creates a systemd service to delete all stopped containers and delete unused images |
-| install_pip_docker | text | no       | no => will not be installed | Installs the python docker pip package                            |
+| cleanup_on_calendar | text | no       | `daily`     | Choose when your cleanup timer will be triggered                                    |
+| install_pip_docker  | text | no       | no => will not be installed | Installs the python docker pip package                              |
 
 ## Usage
 
@@ -61,6 +62,7 @@ All parameters:
     - role: install-docker
       storage_driver: overlay2
       cleanup_enabled: yes
+      cleanup_on_calendar: daily
       install_pip_docker: yes
 ```
 
