@@ -1,11 +1,15 @@
 ---
-on:
-  push:
-  pull_request:
-  schedule:
-    - cron:  '0 6 * * *'
-
 name: Linting files
+
+'on':
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  schedule:
+    - cron: '0 6 * * *'
 
 jobs:
   yamllint:
@@ -15,7 +19,9 @@ jobs:
         uses: actions/checkout@master
 
       - name: Run yamllint
-        uses: actionshub/yamllint@master
+        uses: karancode/yamllint-github-action@master
+        with:
+          yamllint_strict: true
 
   ansible_lint:
     runs-on: ubuntu-latest

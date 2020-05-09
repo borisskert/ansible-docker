@@ -6,7 +6,7 @@
   apt:
     name: apt-transport-https
     state: latest
-    update_cache: yes
+    update_cache: true
 
 - name: Add repository key from keyserver
   apt_key:
@@ -16,12 +16,13 @@
 - name: Add dockerproject.org repository
   apt_repository:
     repo: 'deb {{apt_repo}} raspbian-jessie main'
-    update_cache: yes
+    update_cache: true
     state: present
 
 # Corrects following error:
 # Error starting daemon: Error initializing network controller:
-# could not delete the default bridge network: network bridge has active endpoints
+# could not delete the default bridge network: network bridge
+# has active endpoints
 # See: https://github.com/docker/docker/issues/18283
 - name: fix network issue
   file:

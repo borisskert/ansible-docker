@@ -4,20 +4,22 @@
     name:
       - thin-provisioning-tools
     state: latest
-    update_cache: no
+    update_cache: false
   when: storage_driver == 'devicemapper'
 
 - include: install-docker-ce.main.yml
   when: ansible_distribution_release != 'focal'
 
-# We have to install 'docker.io' package in Ubuntu 20.04 Focal Fossa unless Docker builds an official release package
+# We have to install 'docker.io' package in
+# Ubuntu 20.04 Focal Fossa unless Docker builds
+# an official release package
 - include: install-docker-io.yml
   when: ansible_distribution_release == 'focal'
 
 - name: Enable docker service
   service:
     name: docker
-    enabled: yes
+    enabled: true
 
 - name: Restart docker service
   service:

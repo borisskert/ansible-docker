@@ -2,6 +2,6 @@
 storage_driver: ''
 storage_options: []
 
-cleanup_enabled: no
+cleanup_enabled: false
 cleanup_on_calendar: daily
-install_pip_docker: no
+install_pip_docker: false

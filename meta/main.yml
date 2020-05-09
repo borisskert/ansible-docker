@@ -4,12 +4,12 @@ galaxy_info:
   description: Installation role for docker
   min_ansible_version: 2.1
   platforms:
-  - name: Ubuntu
-    versions:
-    - trusty
-    - xenial
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
   categories:
-  - development
-  - packaging
-  - system
+    - development
+    - packaging
+    - system
 dependencies: []

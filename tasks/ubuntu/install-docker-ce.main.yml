@@ -14,7 +14,7 @@
       - wget
       - apt-transport-https
     state: latest
-    update_cache: yes
+    update_cache: true
 
 - name: Add repository key from keyserver
   apt_key:
@@ -29,7 +29,7 @@
 
 - name: Update apt chache
   apt:
-    update_cache: yes
+    update_cache: true
   when: apt_repo.changed
 
 - name: Install docker-ce package

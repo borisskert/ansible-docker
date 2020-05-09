@@ -1,12 +1,12 @@
 ---
 - hosts: test_machine
-  become: yes
+  become: true
 
   roles:
     - role: ansible-docker
       storage_driver: overlay2
-      cleanup_enabled: no
-      install_pip_docker: yes
+      cleanup_enabled: false
+      install_pip_docker: true
 
   post_tasks:
     - name: test -- pull nginx docker image
@@ -19,7 +19,7 @@
         name: my_web
         image: nginx:1.17.9-alpine
         state: started
-        recreate: no
+        recreate: false
         ports:
           - "8080:80"
           - "8443:443"
