@@ -19,7 +19,7 @@
 
 - name: Add repository key from keyserver
   apt_key:
-    url: "{{ repo.key_url }}"
+    url: "{{ docker_apt_repo.key_url }}"
     state: present
 
 - name: Add repository

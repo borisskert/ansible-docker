@@ -1,5 +1,5 @@
-{% if repo.distribution is defined %}
-deb [arch={{repo.arch}}] {{repo.url}} {{repo.distribution[ansible_distribution_release] | default(ansible_distribution_release)}} {{repo.branch}}
+{% if docker_apt_repo.distribution is defined %}
+deb [arch={{docker_apt_repo.arch}}] {{docker_apt_repo.url}} {{docker_apt_repo.distribution[ansible_distribution_release] | default(ansible_distribution_release)}} {{docker_apt_repo.branch}}
 {% else %}
-deb [arch={{repo.arch}}] {{repo.url}} {{ansible_distribution_release}} {{repo.branch}}
+deb [arch={{docker_apt_repo.arch}}] {{docker_apt_repo.url}} {{ansible_distribution_release}} {{docker_apt_repo.branch}}
 {% endif %}
