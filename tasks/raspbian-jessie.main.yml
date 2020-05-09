@@ -1,21 +1,22 @@
 ---
-- include_vars:
+- name: Read raspbian parameters
+  include_vars:
     file: raspbian.yml
 
 - name: Install needed dependencies
   apt:
     name: apt-transport-https
-    state: latest
+    state: present
     update_cache: true
 
 - name: Add repository key from keyserver
   apt_key:
-    keyserver: '{{keyserver}}'
-    id: '{{key_id}}'
+    keyserver: '{{ keyserver }}'
+    id: '{{ key_id }}'
 
 - name: Add dockerproject.org repository
   apt_repository:
-    repo: 'deb {{apt_repo}} raspbian-jessie main'
+    repo: 'deb {{ apt_repo }} raspbian-jessie main'
     update_cache: true
     state: present
 
@@ -32,4 +33,4 @@
 - name: Install docker-engine package
   apt:
     name: docker-engine
-    state: latest
+    state: present

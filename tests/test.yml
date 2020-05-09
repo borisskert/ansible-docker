@@ -6,6 +6,7 @@
     - role: ansible-docker
       storage_driver: overlay2
       cleanup_enabled: false
+      cleanup_on_calendar: daily
       install_pip_docker: true
 
   post_tasks:
@@ -26,7 +27,7 @@
 
     - name: test -- pull some images
       docker_image:
-        name: "{{item}}"
+        name: "{{ item }}"
         source: pull
       with_items:
         - ubuntu:17.04

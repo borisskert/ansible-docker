@@ -3,5 +3,5 @@
   apt:
     name:
       - docker.io
-    state: latest
+    state: present
     update_cache: true

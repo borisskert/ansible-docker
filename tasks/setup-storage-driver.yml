@@ -7,11 +7,11 @@
     group: root
     mode: 0755
 
-- name: setup storage driver
+- name: Setup storage driver
   template:
     src: docker-daemon.json.j2
     dest: /etc/docker/daemon.json
     owner: root
     group: root
     mode: 0644
-  register: docker_storage_driver
+  notify: Restart docker

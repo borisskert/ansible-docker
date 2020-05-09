@@ -5,7 +5,8 @@
       - docker.io
     state: absent
 
-- include_vars:
+- name: Read ubuntu parameters
+  include_vars:
     file: ubuntu.yml
 
 - name: Install needed dependencies
@@ -13,26 +14,21 @@
     name:
       - wget
       - apt-transport-https
-    state: latest
+    state: present
     update_cache: true
 
 - name: Add repository key from keyserver
   apt_key:
-    url: "{{repo.key_url}}"
+    url: "{{ repo.key_url }}"
     state: present
 
 - name: Add repository
   template:
     src: apt.source.list.j2
     dest: /etc/apt/sources.list.d/download_docker_com_linux_ubuntu.list
-  register: apt_repo
-
-- name: Update apt chache
-  apt:
-    update_cache: true
-  when: apt_repo.changed
 
 - name: Install docker-ce package
   apt:
     name: docker-ce
-    state: latest
+    state: present
+    update_cache: true

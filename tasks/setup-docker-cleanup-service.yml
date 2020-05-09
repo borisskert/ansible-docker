@@ -7,6 +7,7 @@
     group: root
     mode: 0644
   register: cleanup_service
+  notify: Reload systemd
 
 - name: Create cleanup timer
   template:
@@ -15,25 +16,25 @@
     owner: root
     group: root
     mode: 0644
-  register: cleanup_timer
-
-- name: Reload systemd
-  command: systemctl daemon-reload
-  when: >
-    cleanup_service.changed
-    or cleanup_timer.changed
+  notify: Reload systemd
 
 - name: Setup cleanup service
   systemd:
     name: docker-cleanup.service
     enabled: true
 
-- name: Setup cleanup timer
+- name: Start cleanup timer
   systemd:
     name: docker-cleanup.timer
-    enabled: "{{cleanup_enabled | bool}}"
-    state: >
-      {{
-        'started' if (cleanup_enabled | bool)
-        else 'stopped' | default('stopped')
-      }}
+    enabled: true
+    state: started
+  when: cleanup_enabled is defined
+    and cleanup_enabled | bool
+
+- name: Stop cleanup timer
+  systemd:
+    name: docker-cleanup.timer
+    enabled: false
+    state: stopped
+  when: cleanup_enabled is not defined
+    or not (cleanup_enabled | bool)
