@@ -1,0 +1,29 @@
+---
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron:  '0 6 * * *'
+
+name: Linting files
+
+jobs:
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@master
+
+      - name: Run yamllint
+        uses: actionshub/yamllint@master
+
+  ansible_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Lint Ansible Playbook
+        uses: ansible/ansible-lint-action@master
+        with:
+          targets: |
+            tests/test.yml
