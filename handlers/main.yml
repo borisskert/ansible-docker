@@ -3,7 +3,17 @@
   systemd:
     daemon_reload: true
 
+- name: Start docker
+  service:
+    name: docker
+    state: started
+  register: docker_service_start
+
 - name: Restart docker
   service:
     name: docker
     state: restarted
+  when: not (
+    docker_service_start is defined
+    and docker_service_start.changed
+    )

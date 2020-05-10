@@ -22,3 +22,8 @@
 - name: Setup python docker package
   include: setup-python-docker.yml
   when: install_pip_docker | bool
+
+# We need to start/restart docker immediately because other
+# roles will pull/build images during executing the playbook
+- name: Flush handlers
+  meta: flush_handlers

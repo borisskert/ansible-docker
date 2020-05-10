@@ -22,8 +22,6 @@
   service:
     name: docker
     enabled: true
-
-- name: Start docker service (if not started already)
-  service:
-    name: docker
-    state: started
+  register: service_state
+  changed_when: service_state.status.SubState != 'running'
+  notify: Start docker
