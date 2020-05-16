@@ -1,36 +1,5 @@
 ---
-- hosts: test_machine
-  become: true
-
+- hosts: localhost
+  remote_user: root
   roles:
-    - role: ansible-docker
-      storage_driver: overlay2
-      cleanup_enabled: false
-      cleanup_on_calendar: daily
-      install_pip_docker: true
-
-  post_tasks:
-    - name: test -- pull nginx docker image
-      docker_image:
-        name: nginx:1.17.9-alpine
-        source: pull
-
-    - name: test -- run nginx via docker
-      docker_container:
-        name: my_web
-        image: nginx:1.17.9-alpine
-        state: started
-        recreate: false
-        ports:
-          - "8080:80"
-          - "8443:443"
-
-    - name: test -- pull some images
-      docker_image:
-        name: "{{ item }}"
-        source: pull
-      with_items:
-        - ubuntu:17.04
-        - ubuntu:18.04
-        - ubuntu:19.04
-        - ubuntu:20.04
+    - ansible-docker

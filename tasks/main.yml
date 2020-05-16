@@ -23,6 +23,17 @@
   include: setup-python-docker.yml
   when: install_pip_docker | bool
 
+- name: Enable docker service
+  service:
+    name: docker
+    enabled: true
+
+- name: Start docker service
+  service:
+    name: docker
+    state: started
+  register: docker_service_start
+
 # We need to start/restart docker immediately because other
 # roles will pull/build images during executing the playbook
 - name: Flush handlers

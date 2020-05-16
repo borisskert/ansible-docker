@@ -18,23 +18,50 @@
     mode: 0644
   notify: Reload systemd
 
-- name: Setup cleanup service
-  systemd:
+- name: Enable cleanup service
+  service:
     name: docker-cleanup.service
     enabled: true
-
-- name: Start cleanup timer
-  systemd:
-    name: docker-cleanup.timer
-    enabled: true
-    state: started
+  # in docker environment this task would fail
   when: cleanup_enabled is defined
     and cleanup_enabled | bool
+    and not (
+      molecule_docker_environment is defined
+      and molecule_docker_environment | bool
+    )
+
+- name: Enable cleanup timer
+  service:
+    name: docker-cleanup.timer
+    enabled: true
+  when: cleanup_enabled is defined
+    and cleanup_enabled | bool
+    and not (
+      molecule_docker_environment is defined
+      and molecule_docker_environment | bool
+    )
+
+- name: Start cleanup timer
+  service:
+    name: docker-cleanup.timer
+    state: started
+  when: (
+      cleanup_enabled is defined
+      and cleanup_enabled | bool
+    )
+    and not (
+      molecule_docker_environment is defined
+      and molecule_docker_environment | bool
+    )
 
 - name: Stop cleanup timer
-  systemd:
+  service:
     name: docker-cleanup.timer
     enabled: false
     state: stopped
   when: cleanup_enabled is not defined
     or not (cleanup_enabled | bool)
+    and not (
+      molecule_docker_environment is defined
+      and molecule_docker_environment | bool
+    )

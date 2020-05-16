@@ -17,11 +17,3 @@
 - name: Install docker io for Ubuntu 20.04 (focal)
   include: install-docker-io.yml
   when: ansible_distribution_release == 'focal'
-
-- name: Enable docker service
-  service:
-    name: docker
-    enabled: true
-  register: service_state
-  changed_when: service_state.status.SubState != 'running'
-  notify: Start docker

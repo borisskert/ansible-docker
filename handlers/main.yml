@@ -2,12 +2,11 @@
 - name: Reload systemd
   systemd:
     daemon_reload: true
-
-- name: Start docker
-  service:
-    name: docker
-    state: started
-  register: docker_service_start
+  # in docker environment this handler would fail
+  when: not (
+      molecule_docker_environment is defined
+      and molecule_docker_environment | bool
+    )
 
 - name: Restart docker
   service:

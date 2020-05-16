@@ -1,0 +1,40 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+
+  tasks:
+    - name: should provide docker executable
+      command: docker --version
+      register: docker_version
+
+    - name: should start cleanup timer
+      service:
+        name: docker-cleanup.timer
+        state: started
+      register: cleanup_timer
+      failed_when: cleanup_timer.changed
+
+    - name: should pull nginx docker image
+      docker_image:
+        name: nginx:1.17.9-alpine
+        source: pull
+
+    - name: should run nginx via docker
+      docker_container:
+        name: my_web
+        image: nginx:1.17.9-alpine
+        state: started
+        recreate: false
+        ports:
+          - "8080:80"
+          - "8443:443"
+
+    - name: should GET root site
+      get_url:
+        url: http://localhost:8080/
+        dest: /tmp/root.html
+        mode: 0644
+      register: get_request
+      failed_when: get_request.status_code != 200
+        and get_request.md5 != 'e3eb0a1df437f3f97a64aca5952c8ea0'

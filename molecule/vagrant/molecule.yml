@@ -1,0 +1,22 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+
+platforms:
+  - name: ansible-docker-xenial
+    box: ubuntu/xenial64
+  - name: ansible-docker-bionic
+    box: ubuntu/bionic64
+  - name: ansible-docker-focal
+    box: ubuntu/focal64
+
+provisioner:
+  name: ansible
+
+verifier:
+  name: ansible

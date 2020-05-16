@@ -1,0 +1,58 @@
+---
+- name: Verify
+  hosts: all
+
+  tasks:
+    - name: should provide docker executable
+      command: docker --version
+      register: docker_version
+
+    - name: should pull nginx docker image
+      docker_image:
+        name: nginx:1.17.9-alpine
+        source: pull
+
+    - name: should run nginx via docker
+      docker_container:
+        name: my_web
+        image: nginx:1.17.9-alpine
+        state: started
+        recreate: false
+        ports:
+          - "8080:80"
+          - "8443:443"
+      register: nginx_container
+
+    - name: Read docker container facts
+      set_fact:
+        docker_container_facts:
+          "{{ nginx_container.ansible_facts.docker_container }}"
+
+    - name: Read docker host ip
+      set_fact:
+        docker_host:
+          "{{ docker_container_facts.NetworkSettings.Gateway }}"
+
+    - name: should GET root site
+      get_url:
+        url:
+          "http://{{ docker_host }}:8080/"
+        dest: /tmp/root.html
+        mode: 0644
+      register: get_request
+      failed_when: get_request.status_code != 200
+        and get_request.md5 != 'e3eb0a1df437f3f97a64aca5952c8ea0'
+
+  # clean up the created docker image and container
+  post_tasks:
+    - name: delete nginx docker container
+      docker_container:
+        name: my_web
+        state: absent
+      failed_when: false
+
+    - name: should delete nginx docker image
+      docker_image:
+        name: nginx:1.17.9-alpine
+        state: absent
+      failed_when: false
