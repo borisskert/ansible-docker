@@ -10,18 +10,11 @@
   when: ansible_distribution == 'Ubuntu'
 
 - name: Install on Raspbian
-  include: raspbian-jessie.main.yml
-  when: >
-    ansible_machine == 'armv7l'
-    and ansible_distribution == 'Debian'
-    and ansible_distribution_release == 'jessie'
+  include: debian/main.yml
+  when: ansible_distribution == 'Debian'
 
 - name: Setup docker cleanup service
   include: setup-docker-cleanup-service.yml
-
-- name: Setup python docker package
-  include: setup-python-docker.yml
-  when: install_pip_docker | bool
 
 - name: Enable docker service
   service:
@@ -32,6 +25,10 @@
   service:
     name: docker
     state: started
+  when: not(
+      molecule_docker_environment is defined
+      and (molecule_docker_environment | bool)
+    )
   register: docker_service_start
 
 # We need to start/restart docker immediately because other

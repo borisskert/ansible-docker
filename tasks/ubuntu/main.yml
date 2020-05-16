@@ -17,3 +17,7 @@
 - name: Install docker io for Ubuntu 20.04 (focal)
   include: install-docker-io.yml
   when: ansible_distribution_release == 'focal'
+
+- name: Setup python docker package
+  include: setup-python-docker.yml
+  when: install_pip_docker | bool

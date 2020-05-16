@@ -10,7 +10,8 @@ Operating systems:
   * 16.04 (tested)
   * 18.04 (tested)
   * 20.04 (tested - installing `docker.io` package)
-* Raspian jessie (longer time untested)
+* Debian
+  * 10
 
 ## Tasks
 
@@ -70,13 +71,23 @@ All parameters:
 
 Requirements:
 
-* Vagrant with vagrant plugin `vagrant-vbguest` installed
-* VirtualBox
-* Ansible
+* [Vagrant](https://www.vagrantup.com/)
+* [VirtualBox](https://www.virtualbox.org/)
+* [Ansible](https://docs.ansible.com/)
+* [Molecule](https://molecule.readthedocs.io/en/latest/index.html)
+* [yamllint](https://yamllint.readthedocs.io/en/stable/#)
+* [ansible-lint](https://docs.ansible.com/ansible-lint/)
+* [Docker](https://docs.docker.com/)
 
-Run:
+### Run within docker
 
 ```shell script
-cd test
-./test.sh
+molecule test --scenario-name ubuntu
+molecule test --scenario-name debian
+```
+
+### Run within Vagrant
+
+```shell script
+ molecule test --scenario-name vagrant --parallel
 ```

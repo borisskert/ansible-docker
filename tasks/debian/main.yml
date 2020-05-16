@@ -1,0 +1,45 @@
+---
+- name: Read raspbian parameters
+  include_vars:
+    file: debian.yml
+
+- name: Update apt cache
+  package:
+    update_cache: true
+
+- name: Install needed dependencies
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg-agent
+    - software-properties-common
+
+- name: Add repository key from keyserver
+  apt_key:
+    url: "{{ docker_apt_repo.key_url }}"
+    id: "{{ docker_apt_repo.key_id }}"
+    state: present
+
+- name: Add dockerproject.org repository
+  apt_repository:
+    repo:
+      "deb [arch={{ docker_apt_repo.arch[ansible_machine] }}] \
+      {{ docker_apt_repo.url }} \
+      {{ ansible_distribution_release }} \
+      {{ docker_apt_repo.branch }}"
+    update_cache: true
+    state: present
+
+- name: Install docker packages
+  apt:
+    name: docker-ce
+    state: present
+    install_recommends: false
+
+- name: Setup python docker package
+  include: setup-python-docker.yml
+  when: install_pip_docker | bool

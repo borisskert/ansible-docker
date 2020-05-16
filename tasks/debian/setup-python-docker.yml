@@ -1,0 +1,11 @@
+---
+- name: install pip for python 3
+  apt:
+    name: python3-pip
+
+- name: install docker pip package
+  pip:
+    name: "{{ item }}"
+    executable: pip3
+  loop:
+    - docker

@@ -11,11 +11,12 @@ driver:
   name: docker
 
 platforms:
-  - name: instance
+  - name: docker-ubuntu
     image: docker.io/pycontribs/ubuntu
     pre_build_image: true
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
+
 provisioner:
   name: ansible
 

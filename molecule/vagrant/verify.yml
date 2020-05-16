@@ -7,6 +7,7 @@
     - name: should provide docker executable
       command: docker --version
       register: docker_version
+      changed_when: false
 
     - name: should start cleanup timer
       service:
@@ -34,7 +35,6 @@
       get_url:
         url: http://localhost:8080/
         dest: /tmp/root.html
-        mode: 0644
       register: get_request
       failed_when: get_request.status_code != 200
         and get_request.md5 != 'e3eb0a1df437f3f97a64aca5952c8ea0'
