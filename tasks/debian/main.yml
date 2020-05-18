@@ -1,5 +1,5 @@
 ---
-- name: Read raspbian parameters
+- name: Read debian parameters
   include_vars:
     file: debian.yml
 

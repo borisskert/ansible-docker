@@ -7,11 +7,12 @@ Installs docker-daemon and cli.
 Operating systems:
 
 * Ubuntu:
-  * 16.04 (tested)
-  * 18.04 (tested)
-  * 20.04 (tested - installing `docker.io` package)
+  * 16.04 (xenial)
+  * 18.04 (bionic)
+  * 20.04 (focal - installing `docker.io` package)
 * Debian
-  * 10
+  * 9 (stretch)
+  * 10 (buster)
 
 ## Tasks
 
