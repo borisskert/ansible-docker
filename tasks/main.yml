@@ -20,6 +20,10 @@
   service:
     name: docker
     enabled: true
+  when: not(
+    molecule_docker_environment is defined
+    and (molecule_docker_environment | bool)
+    )
 
 - name: Start docker service
   service:

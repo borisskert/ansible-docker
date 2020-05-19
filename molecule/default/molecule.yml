@@ -1,0 +1,73 @@
+---
+dependency:
+  name: galaxy
+
+lint: |
+  set -e
+  yamllint . --strict
+  ansible-lint
+
+driver:
+  name: docker
+
+platforms:
+  - name: docker-focal
+    image: docker.io/borisskert/python3:focal
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  - name: docker-bionic
+    image: docker.io/borisskert/python3:bionic
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  - name: docker-xenial
+    image: docker.io/borisskert/python3:xenial
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  - name: docker-buster
+    image: docker.io/borisskert/python3:buster
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+  - name: docker-stretch
+    image: docker.io/borisskert/python3:stretch
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      docker-focal:
+        test_image_to_pull: nginx:1.17.9-alpine
+        test_port: 8080
+        test_container_name: nginx-for-focal
+      docker-bionic:
+        test_image_to_pull: nginx:1.17.8-alpine
+        test_port: 8081
+        test_container_name: nginx-for-bionic
+      docker-xenial:
+        test_image_to_pull: nginx:1.17.7-alpine
+        test_port: 8082
+        test_container_name: nginx-for-xenial
+      docker-buster:
+        ansible_python_interpreter: /usr/bin/python3
+        test_image_to_pull: nginx:1.17.6-alpine
+        test_port: 8083
+        test_container_name: nginx-for-buster
+      docker-stretch:
+        ansible_python_interpreter: /usr/bin/python3
+        test_image_to_pull: nginx:1.17.5-alpine
+        test_port: 8084
+        test_container_name: nginx-for-stretch
+
+verifier:
+  name: ansible
