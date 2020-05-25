@@ -1,21 +1,35 @@
 ---
-- name: Reload systemd
+- name: Reload docker-cleanup service
   systemd:
+    name: docker-cleanup.service
+    enabled: "{{ cleanup_enabled is defined
+      and cleanup_enabled | bool }}"
     daemon_reload: true
   when: not (
     molecule_docker_environment is defined
     and molecule_docker_environment | bool
     )
 
-- name: Restart docker
+- name: Reload docker-cleanup timer
+  systemd:
+    name: docker-cleanup.timer
+    enabled: "{{ cleanup_enabled is defined
+      and cleanup_enabled | bool }}"
+    state: "{{ 'started' if (
+      cleanup_enabled is defined
+      and cleanup_enabled | bool
+      ) else 'stopped' }}"
+    daemon_reload: true
+  when: not (
+    molecule_docker_environment is defined
+    and molecule_docker_environment | bool
+    )
+
+- name: Restart docker service
   service:
     name: docker
     state: restarted
   when: not (
-    docker_service_start is defined
-    and docker_service_start.changed
-    )
-    and not (
     molecule_docker_environment is defined
     and molecule_docker_environment | bool
     )
