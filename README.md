@@ -9,7 +9,7 @@ Operating systems:
 * Ubuntu:
   * 16.04 (xenial)
   * 18.04 (bionic)
-  * 20.04 (focal - installing `docker.io` package)
+  * 20.04 (focal)
 * Debian
   * 9 (stretch)
   * 10 (buster)
@@ -18,7 +18,7 @@ Operating systems:
 
 * Add repository key from keyserver
 * Add docker repository
-* Install docker-ce package (`docker.io` in Ubuntu 20.04)
+* Install docker-ce package
 * Setup docker daemon options (optional)
 * Setup docker-cleanup systemd service (optional)
 * Setup python3 docker via pip (optional)
