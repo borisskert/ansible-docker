@@ -42,4 +42,4 @@
 
 - name: Setup python docker package
   include: setup-python-docker.yml
-  when: install_pip_docker | bool
+  when: docker_install_pip_package | bool

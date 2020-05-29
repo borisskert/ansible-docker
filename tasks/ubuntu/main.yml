@@ -5,7 +5,7 @@
       - thin-provisioning-tools
     state: present
     update_cache: false
-  when: storage_driver == 'devicemapper'
+  when: docker_storage_driver == 'devicemapper'
 
 - name: Install docker-ce package for Ubuntu
   include: install-docker-ce.main.yml
@@ -20,4 +20,4 @@
 
 - name: Setup python docker package
   include: setup-python-docker.yml
-  when: install_pip_docker | bool
+  when: docker_install_pip_package | bool

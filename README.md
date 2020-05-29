@@ -27,10 +27,10 @@ Operating systems:
 
 | Variable      | Type | Mandatory? | Default | Description           |
 |---------------|------|------------|---------|-----------------------|
-| storage_driver | text | no        | <empty => aufs> | The docker storage driver (consider documentation) |
-| cleanup_enabled | text | no       | no => disabled  | Creates a systemd service to delete all stopped containers and delete unused images |
-| cleanup_on_calendar | text | no       | `daily`     | Choose when your cleanup timer will be triggered                                    |
-| install_pip_docker  | text | no       | no => will not be installed | Installs the python docker pip package                              |
+| docker_storage_driver | text | no        | <empty => aufs> | The docker storage driver (consider documentation) |
+| docker_cleanup_enabled | text | no       | no => disabled  | Creates a systemd service to delete all stopped containers and delete unused images |
+| docker_cleanup_on_calendar | text | no   | `daily`         | Choose when your cleanup timer will be triggered                                    |
+| docker_install_pip_package  | text | no  | no => will not be installed | Installs the python docker pip package                                  |
 
 ## Usage
 
@@ -62,10 +62,10 @@ All parameters:
 
   roles:
     - role: install-docker
-      storage_driver: overlay2
-      cleanup_enabled: yes
-      cleanup_on_calendar: daily
-      install_pip_docker: yes
+      docker_storage_driver: overlay2
+      docker_cleanup_enabled: yes
+      docker_cleanup_on_calendar: daily
+      docker_install_pip_package: yes
 ```
 
 ## Testing

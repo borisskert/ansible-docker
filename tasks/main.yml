@@ -2,8 +2,8 @@
 - name: Setup storage driver
   include: setup-storage-driver.yml
   when: >
-    storage_driver is defined
-    and storage_driver | length > 0
+    docker_storage_driver is defined
+    and docker_storage_driver | length > 0
 
 - name: Install on ubuntu
   include: ubuntu/main.yml

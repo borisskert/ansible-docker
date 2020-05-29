@@ -1,7 +1,7 @@
 ---
-storage_driver: ''
-storage_options: []
+docker_storage_driver: ''
+docker_storage_options: []
 
-cleanup_enabled: false
-cleanup_on_calendar: daily
-install_pip_docker: false
+docker_cleanup_enabled: false
+docker_cleanup_on_calendar: daily
+docker_install_pip_package: false
