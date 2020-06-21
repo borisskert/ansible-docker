@@ -1,0 +1,48 @@
+---
+- name: Remove docker.io package
+  apt:
+    name:
+      - docker.io
+    state: absent
+
+- name: Install requirements
+  apt:
+    name:
+      - wget
+      - apt-transport-https
+    state: present
+    update_cache: true
+
+- name: Read apt variables
+  include_vars:
+    file: apt.yml
+
+- name: Read apt parameters
+  set_fact:
+    apt_arch: "{{ docker_apt_repo.arch[ansible_machine] }}"
+    apt_dist: "{{ docker_apt_repo.distribution[ansible_distribution] }}"
+    apt_release:
+      "{{ docker_apt_repo.distribution[ansible_distribution_release]
+       | default(ansible_distribution_release) }}"
+
+- name: Add repository key from keyserver
+  apt_key:
+    url:
+      "https://download.docker.com/linux/\
+      {{ apt_dist }}/gpg"
+    state: present
+
+- name: Add repository
+  apt_repository:
+    repo:
+      "deb [arch={{ apt_arch }}] \
+      https://download.docker.com/linux/{{ apt_dist }} \
+      {{ apt_release }} \
+      stable"
+    update_cache: true
+    state: present
+
+- name: Install docker-ce package
+  apt:
+    name: docker-ce
+    state: present

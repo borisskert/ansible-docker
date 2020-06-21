@@ -1,7 +1,0 @@
----
-- name: Install docker.io package
-  apt:
-    name:
-      - docker.io
-    state: present
-    update_cache: true

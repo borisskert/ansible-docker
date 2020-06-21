@@ -5,13 +5,22 @@
     docker_storage_driver is defined
     and docker_storage_driver | length > 0
 
-- name: Install on ubuntu
-  include: ubuntu/main.yml
-  when: ansible_distribution == 'Ubuntu'
+- name: Install needed dependencies for devicemapper
+  apt:
+    name:
+      - thin-provisioning-tools
+    state: present
+    update_cache: false
+  when: docker_storage_driver == 'devicemapper'
 
-- name: Install on Raspbian
-  include: debian/main.yml
-  when: ansible_distribution == 'Debian'
+- name: Install docker apt package
+  include: install-apt-package.yml
+  when: ansible_distribution == 'Ubuntu'
+    or ansible_distribution == 'Debian'
+
+- name: Setup python docker package
+  include: setup-python-docker.yml
+  when: docker_install_pip_package | bool
 
 - name: Setup docker cleanup service
   include: setup-docker-cleanup-service.yml

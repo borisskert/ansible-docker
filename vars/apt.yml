@@ -1,0 +1,9 @@
+---
+docker_apt_repo:
+  distribution:
+    Ubuntu: ubuntu
+    Debian: debian
+  arch:
+    x86_64: amd64
+    armv7l: armhf
+    aarch64: arm64

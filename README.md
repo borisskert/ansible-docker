@@ -4,7 +4,13 @@ Installs docker-daemon and cli.
 
 ## Requirements
 
-Operating systems:
+### CPU architecture:
+
+* x86_64 / amd64
+* armv7l / armhf
+* aarch64 / arm64
+
+### Operating systems:
 
 * Ubuntu:
   * 16.04 (xenial)

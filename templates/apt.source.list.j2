@@ -1,5 +1,1 @@
-{% if docker_apt_repo.distribution is defined %}
-deb [arch={{docker_apt_repo.arch}}] {{docker_apt_repo.url}} {{docker_apt_repo.distribution[ansible_distribution_release] | default(ansible_distribution_release)}} {{docker_apt_repo.branch}}
-{% else %}
-deb [arch={{docker_apt_repo.arch}}] {{docker_apt_repo.url}} {{ansible_distribution_release}} {{docker_apt_repo.branch}}
-{% endif %}
+deb [arch={{ apt_arch }}] https://download.docker.com/linux/{{ apt_dist }} {{ apt_release }} stable

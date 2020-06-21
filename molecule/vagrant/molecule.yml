@@ -8,8 +8,20 @@ driver:
     name: virtualbox
 
 platforms:
+  - name: ansible-docker-xenial
+    box: ubuntu/xenial64
+  - name: ansible-docker-bionic
+    box: ubuntu/bionic64
   - name: ansible-docker-focal
     box: ubuntu/focal64
+  - name: ansible-docker-stretch
+    box: debian/stretch64
+    groups:
+      - debian
+  - name: ansible-docker-buster
+    box: debian/buster64
+    groups:
+      - debian
 
 provisioner:
   name: ansible
