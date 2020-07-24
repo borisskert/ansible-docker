@@ -95,7 +95,7 @@ molecule test
 ### Run within Vagrant
 
 ```shell script
- molecule test --scenario-name vagrant --parallel
+molecule test --scenario-name vagrant --parallel
 ```
 
 I recommend to use [pyenv](https://github.com/pyenv/pyenv) for local testing.

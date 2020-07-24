@@ -10,6 +10,7 @@
     name:
       - wget
       - apt-transport-https
+      - gnupg
     state: present
     update_cache: true
 
