@@ -15,7 +15,7 @@
         source: pull
 
     - name: should run nginx via docker
-      docker_container:
+      community.docker.docker_container:
         name: "{{ test_container_name }}"
         image: "{{ test_image_to_pull }}"
         state: started
@@ -24,15 +24,10 @@
           - "{{ test_port }}:80"
       register: nginx_container
 
-    - name: Read docker container facts
-      set_fact:
-        docker_container_facts:
-          "{{ nginx_container.ansible_facts.docker_container }}"
-
     - name: Read docker host ip
       set_fact:
         docker_host:
-          "{{ docker_container_facts.NetworkSettings.Gateway }}"
+          "{{ nginx_container.container.NetworkSettings.Gateway }}"
 
     - name: should GET root site
       get_url:
