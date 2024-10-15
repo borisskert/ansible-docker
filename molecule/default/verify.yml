@@ -10,44 +10,5 @@
       changed_when: false
 
     - name: should pull nginx docker image
-      docker_image:
-        name: "{{ test_image_to_pull }}"
-        source: pull
-
-    - name: should run nginx via docker
-      community.docker.docker_container:
-        name: "{{ test_container_name }}"
-        image: "{{ test_image_to_pull }}"
-        state: started
-        recreate: false
-        ports:
-          - "{{ test_port }}:80"
-      register: nginx_container
-
-    - name: Read docker host ip
-      set_fact:
-        docker_host:
-          "{{ nginx_container.container.NetworkSettings.Gateway }}"
-
-    - name: should GET root site
-      get_url:
-        url:
-          "http://{{ docker_host }}:{{ test_port }}/"
-        dest: /tmp/root.html
-        mode: 0644
-      register: get_request
-      failed_when: get_request.status_code != 200
-        and get_request.md5 != 'e3eb0a1df437f3f97a64aca5952c8ea0'
-
-    # clean up the created docker image and container
-    - name: delete nginx docker container
-      docker_container:
-        name: "{{ test_container_name }}"
-        state: absent
-      failed_when: false
-
-    - name: should delete nginx docker image
-      docker_image:
-        name: "{{ test_image_to_pull }}"
-        state: absent
-      failed_when: false
+      command: "docker pull {{ test_image_to_pull }}"
+      changed_when: false

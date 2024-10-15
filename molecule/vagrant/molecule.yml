@@ -9,15 +9,15 @@ driver:
 
 platforms:
   - name: ansible-docker-jammy
-    box: ubuntu/jammy64
+    box: generic/ubuntu2204
   - name: ansible-docker-focal
-    box: ubuntu/focal64
+    box: generic/ubuntu2004
   - name: ansible-docker-bookworm
-    box: debian/bookworm64
+    box: generic/debian12
     groups:
       - debian
   - name: ansible-docker-bullseye
-    box: debian/bullseye64
+    box: generic/debian11
     groups:
       - debian
 
