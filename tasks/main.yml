@@ -18,10 +18,6 @@
   when: ansible_distribution == 'Ubuntu'
     or ansible_distribution == 'Debian'
 
-- name: Setup python docker package
-  include_tasks: setup-python-docker.yml
-  when: docker_install_pip_package | bool
-
 - name: Setup docker cleanup service
   include_tasks: setup-docker-cleanup-service.yml
 
