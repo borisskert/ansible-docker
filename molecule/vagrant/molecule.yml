@@ -8,16 +8,18 @@ driver:
     name: virtualbox
 
 platforms:
+  - name: ansible-docker-noble
+    box: cloud-image/ubuntu-24.04
   - name: ansible-docker-jammy
-    box: generic/ubuntu2204
+    box: cloud-image/ubuntu-22.04
   - name: ansible-docker-focal
-    box: generic/ubuntu2004
+    box: cloud-image/ubuntu-20.04
   - name: ansible-docker-bookworm
-    box: generic/debian12
+    box: cloud-image/debian-12
     groups:
       - debian
   - name: ansible-docker-bullseye
-    box: generic/debian11
+    box: cloud-image/debian-11
     groups:
       - debian
 
