@@ -4,8 +4,6 @@ dependency:
 
 driver:
   name: vagrant
-  provider:
-    name: virtualbox
 
 platforms:
   - name: ansible-docker-noble

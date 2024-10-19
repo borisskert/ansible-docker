@@ -14,11 +14,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
-        with:
-          path: "${{ github.repository }}"
+        uses: actions/checkout@v4
 
-      - name: lint and test with molecule
-        uses: borisskert/molecule-action@v20.07.21
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
         with:
-          arguments: test
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-kvm libvirt-daemon libvirt-clients virtinst bridge-utils libvirt-dev python3-libvirt python3-pip
+          pip install ansible molecule molecule-libvirt
+
+      - name: Start libvirtd service
+        run: |
+          sudo systemctl enable --now libvirtd
+          sudo systemctl start libvirtd
+
+      - name: Configure Network for QEMU
+        run: |
+          sudo virsh net-start default
+          sudo virsh net-autostart default
+
+      - name: Run Molecule Test
+        run: |
+          molecule test
