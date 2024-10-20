@@ -8,35 +8,60 @@ name: Run tests
   pull_request:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   molecule_test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+#      - name: Set up Python ${{ matrix.python-version }}
+#        uses: actions/setup-python@v5
+#        with:
+#          python-version: '3.12'
 
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y qemu-kvm libvirt-daemon libvirt-clients virtinst bridge-utils libvirt-dev python3-libvirt python3-pip
-          pip install ansible molecule molecule-libvirt
+          sudo apt-get install -y qemu-kvm libvirt-daemon libvirt-clients virtinst bridge-utils libvirt-dev libvirt-daemon-system
+          sudo apt-get install -y vagrant
+          sudo apt-get install -y pipx
+          #sudo python3.12 -m pip install pipx
+          #pip install ansible ansible-base molecule molecule-libvirt molecule-vagrant molecule-docker
+          pipx install --include-deps ansible
+          pipx inject --include-apps \
+                      --include-deps ansible \
+                      molecule \
+                      requests \
+                      molecule-libvirt molecule-vagrant molecule-docker \
+                      molecule-plugins molecule-plugins[docker] molecule-plugins[vagrant] molecule-plugins[libvirt]
+
+#      - name: Verify libvirtd unit file existence
+#        run: |
+#          ls -l /usr/lib/systemd/system/libvirtd.service
+
+      - name: Verify installed programs
+        run: |
+          ansible --version
+          molecule --version
+          vagrant --version
+
+      - name: Verify libvirtd service
+        run: |
+          sudo systemctl status libvirtd
 
       - name: Start libvirtd service
         run: |
           sudo systemctl enable --now libvirtd
           sudo systemctl start libvirtd
-
-      - name: Configure Network for QEMU
-        run: |
-          sudo virsh net-start default
-          sudo virsh net-autostart default
+#
+#      - name: Configure Network for QEMU
+#        run: |
+#          sudo virsh net-start default
+#          sudo virsh net-autostart default
 
       - name: Run Molecule Test
         run: |
-          molecule test
+          molecule test --all
