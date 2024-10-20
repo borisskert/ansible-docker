@@ -4,4 +4,3 @@ docker_storage_options: []
 
 docker_cleanup_enabled: false
 docker_cleanup_on_calendar: daily
-docker_install_pip_package: false

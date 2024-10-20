@@ -1,6 +1,6 @@
 ---
 - name: Setup storage driver
-  include: setup-storage-driver.yml
+  include_tasks: setup-storage-driver.yml
   when: >
     docker_storage_driver is defined
     and docker_storage_driver | length > 0
@@ -14,16 +14,12 @@
   when: docker_storage_driver == 'devicemapper'
 
 - name: Install docker apt package
-  include: install-apt-package.yml
+  include_tasks: install-apt-package.yml
   when: ansible_distribution == 'Ubuntu'
     or ansible_distribution == 'Debian'
 
-- name: Setup python docker package
-  include: setup-python-docker.yml
-  when: docker_install_pip_package | bool
-
 - name: Setup docker cleanup service
-  include: setup-docker-cleanup-service.yml
+  include_tasks: setup-docker-cleanup-service.yml
 
 # We need to start/restart docker immediately because other
 # roles will pull/build images during executing the playbook
