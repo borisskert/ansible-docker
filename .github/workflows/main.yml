@@ -20,6 +20,6 @@ jobs:
           path: "${{ github.repository }}"
 
       - name: lint and test with molecule
-        uses: borisskert/molecule-action@v21.06.04
+        uses: borisskert/molecule-action@v24.11.10
         with:
           arguments: test
