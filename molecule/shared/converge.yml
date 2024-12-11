@@ -3,9 +3,11 @@
   hosts: all
   become: true
 
-  roles:
-    - role: ansible-docker
-      docker_storage_driver: overlay2
-      docker_cleanup_enabled: true
-      docker_cleanup_on_calendar: daily
-      docker_install_pip_package: true
+  tasks:
+    - name: Testing role
+      ansible.builtin.include_role:
+        name: "ansible-docker"
+      vars:
+        docker_storage_driver: overlay2
+        docker_cleanup_enabled: true
+        docker_cleanup_on_calendar: daily
